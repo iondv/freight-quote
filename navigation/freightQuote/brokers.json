@@ -1,0 +1,15 @@
+{
+  "code": "brokers",
+  "caption": "Brokers",
+  "type": 1,
+  "orderNumber": 30,
+  "title": "",
+  "hint": "",
+  "classname": "broker",
+  "container": "",
+  "collection": "",
+  "url": "",
+  "conditions": [],
+  "sorting": [],
+  "pathChains": []
+}

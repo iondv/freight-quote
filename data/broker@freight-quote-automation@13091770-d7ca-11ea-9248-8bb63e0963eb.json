@@ -1,0 +1,13 @@
+{
+  "isActive": true,
+  "code": "freightquote.com",
+  "name": "FreightQuote By C.H.Robinson",
+  "user": "",
+  "password": "",
+  "guid": "13091770-d7ca-11ea-9248-8bb63e0963eb",
+  "_class": "broker@freight-quote-automation",
+  "_classVer": "",
+  "_creator": "admin@local",
+  "_editor": "admin@local",
+  "___workflowStatus": {}
+}

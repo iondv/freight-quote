@@ -1,0 +1,48 @@
+{
+  "name": "freightClass",
+  "caption": "Freight Class",
+  "key": [
+    "class"
+  ],
+  "semantic": "class",
+  "version": "",
+  "ancestor": "",
+  "container": "",
+  "creationTracker": "",
+  "changeTracker": "",
+  "compositeIndexes": null,
+  "journaling": false,
+  "isStruct": false,
+  "properties": [
+    {
+      "name": "class",
+      "caption": "Class",
+      "type": 0,
+      "size": 24,
+      "readonly": false,
+      "indexed": true,
+      "unique": true,
+      "autoassigned": false,
+      "orderNumber": 10,
+      "mode": 0,
+      "decimals": 0,
+      "allowedFileTypes": "",
+      "maxFileCount": 0,
+      "hint": "",
+      "semantic": "",
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "defaultValue": "",
+      "binding": null,
+      "selConditions": [],
+      "selSorting": null,
+      "selectionProvider": null,
+      "formula": null,
+      "eagerLoading": false,
+      "nullable": false,
+      "indexSearch": false
+    }
+  ]
+}

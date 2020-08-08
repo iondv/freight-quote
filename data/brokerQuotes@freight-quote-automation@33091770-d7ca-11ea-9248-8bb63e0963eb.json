@@ -1,0 +1,16 @@
+{
+  "isActive": true,
+  "quotes": "23091770-d7ca-11ea-9248-8bb63e0963eb",
+  "quotesScreenshot": null,
+  "quotesPdf": null,
+  "resultScreenshot": null,
+  "resultPdf": null,
+  "results": [],
+  "logs": "logs.....",
+  "guid": "33091770-d7ca-11ea-9248-8bb63e0963eb",
+  "_class": "brokerQuotes@freight-quote-automation",
+  "_classVer": "",
+  "_creator": "admin@local",
+  "_editor": "admin@local",
+  "___workflowStatus": {}
+}

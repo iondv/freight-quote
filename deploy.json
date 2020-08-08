@@ -1,0 +1,109 @@
+{
+  "namespace": "freight-quote-automation",
+  "parametrised": true,
+  "deployer": "built-in",
+  "globals": {
+    "staticOptions": {
+      "maxAge": 3600000
+    },
+    "lang": "en",
+    "pageTitle": "Freight quote",
+    "moduleTitles": {},
+    "explicitTopMenu": [
+      {
+        "id": "freightQuote",
+        "url": "/registry/freight-quote-automation@quotes",
+        "caption": "Freight quote"
+      }
+    ],
+    "plugins": {
+      "workflowEvents" : {
+        "module": "applications/freight-quote-automation/utils/workflowEvents.js",
+        "initMethod": "init",
+        "initLevel": 1,
+        "options": {
+          "workflows": "ion://workflows",
+          "metaRepo": "ion://metaRepo",
+          "dataRepo": "ion://dataRepo",
+          "log": "ion://sysLog"
+        }
+      }
+    },
+    "jobs": {}
+  },
+  "modules": {
+    "ionadmin": {
+      "globals": null,
+      "import": null,
+      "statics": null
+    },
+    "registry": {
+      "import": null,
+      "globals": {
+        "eagerLoading": {
+          "*": {
+            "quotes@freight-quote-automation": {
+              "item": [
+                "results.brokerQuotes.quotes",
+                "results.quotes"
+              ]
+            },
+            "brokerQuotes@freight-quote-automation": {
+              "item": [
+                "results.brokerQuotes.quotes",
+                "results.quotes"
+              ]
+            }
+          }
+        },
+        "defaultPath": "freight-quote-automation@quotes",
+        "inlineForm": true,
+        "logo": "",
+        "statics": null,
+        "di": {
+          "itemToExcel": {
+            "module": "modules/registry/export/itemToExcel",
+            "initMethod": "init",
+            "initLevel": 0,
+            "options": {
+              "tplDir": "applications/freight-quote-automation/export/item",
+              "injectors": []
+            }
+          },
+          "itemToDocx": {
+            "module": "modules/registry/export/itemToDocx",
+            "initMethod": "init",
+            "initLevel": 0,
+            "options": {
+              "tplDir": "applications/freight-quote-automation/export/item",
+              "injectors": []
+            }
+          },
+          "listToDocx": {
+            "module": "modules/registry/export/listToDocx",
+            "initMethod": "init",
+            "initLevel": 0,
+            "options": {
+              "tplDir": "applications/freight-quote-automation/export/list",
+              "log": "ion://sysLog"
+            }
+          },
+          "listToExcel": {
+            "module": "modules/registry/export/listToExcel",
+            "initMethod": "init",
+            "initLevel": 0,
+            "options": {
+              "tplDir": "applications/freight-quote-automation/export/list",
+              "log": "ion://sysLog"
+            }
+          },
+          "export": {
+            "options": {
+              "configs": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}

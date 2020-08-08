@@ -1,0 +1,675 @@
+{
+  "classes": {
+    "quotes": {
+      "uml": {
+        "offset": {
+          "top": 286.00001525878906,
+          "left": 60
+        }
+      }
+    },
+    "freightClass": {
+      "uml": {
+        "offset": {
+          "top": 54,
+          "left": 367
+        }
+      }
+    },
+    "brokerQuotes": {
+      "uml": {
+        "offset": {
+          "top": 394.00001525878906,
+          "left": 415
+        }
+      }
+    },
+    "result": {
+      "uml": {
+        "offset": {
+          "top": 25,
+          "left": 177
+        }
+      }
+    }
+  },
+  "workflows": {
+    "quotes": {
+      "states": {
+        "received": {
+          "uml": {
+            "offset": {
+              "top": 77,
+              "left": 107
+            }
+          }
+        }
+      },
+      "transitions": {}
+    }
+  },
+  "interfaces": [],
+  "changeLogs": [
+    {
+      "action": "create",
+      "type": "class",
+      "name": "broker",
+      "date": "2020-08-06T05:14:40.614Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "guid.broker",
+      "date": "2020-08-06T05:14:40.636Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "name.broker",
+      "date": "2020-08-06T05:15:08.381Z"
+    },
+    {
+      "action": "update",
+      "type": "class attribute",
+      "name": "guid.broker",
+      "oldValue": {
+        "caption": "Идентификатор",
+        "type": null
+      },
+      "newValue": {
+        "caption": "Guid",
+        "type": null
+      },
+      "date": "2020-08-06T05:15:25.149Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "code.broker",
+      "date": "2020-08-06T05:15:45.402Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "isActive.broker",
+      "date": "2020-08-06T05:17:39.434Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "user.broker",
+      "date": "2020-08-06T05:17:57.373Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "password.broker",
+      "date": "2020-08-06T05:18:23.409Z"
+    },
+    {
+      "action": "create",
+      "type": "class",
+      "name": "quotes",
+      "date": "2020-08-06T05:18:43.785Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "guid.quotes",
+      "date": "2020-08-06T05:18:43.812Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "brokers.quotes",
+      "date": "2020-08-06T05:19:31.045Z"
+    },
+    {
+      "action": "update",
+      "type": "class attribute",
+      "name": "guid.quotes",
+      "oldValue": {
+        "caption": "Идентификатор",
+        "type": null
+      },
+      "newValue": {
+        "caption": "Guid",
+        "type": null
+      },
+      "date": "2020-08-06T05:19:39.950Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "loadingDate.quotes",
+      "date": "2020-08-06T05:20:03.337Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "pickup.quotes",
+      "date": "2020-08-06T05:20:23.322Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "delivery.quotes",
+      "date": "2020-08-06T05:20:43.169Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "description.quotes",
+      "date": "2020-08-06T05:21:04.365Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "packageType.quotes",
+      "date": "2020-08-06T05:27:33.023Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "length.quotes",
+      "date": "2020-08-06T05:28:13.551Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "width.quotes",
+      "date": "2020-08-06T05:28:31.204Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "height.quotes",
+      "date": "2020-08-06T05:28:57.613Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "weight.quotes",
+      "date": "2020-08-06T05:29:18.550Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "freightClass.quotes",
+      "date": "2020-08-06T05:29:59.621Z"
+    },
+    {
+      "action": "create",
+      "type": "class",
+      "name": "freightClass",
+      "date": "2020-08-06T05:30:18.297Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "guid.freightClass",
+      "date": "2020-08-06T05:30:18.317Z"
+    },
+    {
+      "action": "update",
+      "type": "class attribute",
+      "name": "class.freightClass",
+      "oldValue": {
+        "name": "guid",
+        "caption": "Идентификатор",
+        "type": 12,
+        "readonly": true,
+        "autoassigned": true,
+        "nullable": true
+      },
+      "newValue": {
+        "name": "class",
+        "caption": "Class",
+        "type": 0,
+        "readonly": false,
+        "autoassigned": false,
+        "nullable": false
+      },
+      "date": "2020-08-06T05:31:21.728Z"
+    },
+    {
+      "action": "update",
+      "type": "class attribute",
+      "name": "freightClass.quotes",
+      "oldValue": {
+        "refClass": "",
+        "type": null
+      },
+      "newValue": {
+        "refClass": "freightClass",
+        "type": null
+      },
+      "date": "2020-08-06T05:31:32.125Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "quantity.quotes",
+      "date": "2020-08-06T05:31:51.737Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "brokerQuotes.quotes",
+      "date": "2020-08-06T05:32:28.173Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "results.quotes",
+      "date": "2020-08-06T05:32:53.774Z"
+    },
+    {
+      "action": "create",
+      "type": "class",
+      "name": "brokerQuotes",
+      "date": "2020-08-06T05:33:20.008Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "guid.brokerQuotes",
+      "date": "2020-08-06T05:33:20.034Z"
+    },
+    {
+      "action": "update",
+      "type": "class attribute",
+      "name": "guid.brokerQuotes",
+      "oldValue": {
+        "caption": "Идентификатор",
+        "type": null
+      },
+      "newValue": {
+        "caption": "Guid",
+        "type": null
+      },
+      "date": "2020-08-06T05:33:30.060Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "quotes.brokerQuotes",
+      "date": "2020-08-06T05:34:02.273Z"
+    },
+    {
+      "action": "update",
+      "type": "class attribute",
+      "name": "brokerQuotes.quotes",
+      "oldValue": {
+        "itemsClass": "",
+        "backRef": "",
+        "type": null
+      },
+      "newValue": {
+        "itemsClass": "brokerQuotes",
+        "backRef": "quotes",
+        "type": null
+      },
+      "date": "2020-08-06T05:34:34.310Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "quotesScreenshot.brokerQuotes",
+      "date": "2020-08-06T05:35:03.849Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "quotesPdf.brokerQuotes",
+      "date": "2020-08-06T05:35:24.609Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "resultScreenshot.brokerQuotes",
+      "date": "2020-08-06T05:35:43.145Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "resultPdf.brokerQuotes",
+      "date": "2020-08-06T05:36:01.730Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "results.brokerQuotes",
+      "date": "2020-08-06T05:36:29.796Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "logs.brokerQuotes",
+      "date": "2020-08-06T05:36:53.072Z"
+    },
+    {
+      "action": "create",
+      "type": "class",
+      "name": "result",
+      "date": "2020-08-06T05:37:19.771Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "guid.result",
+      "date": "2020-08-06T05:37:19.789Z"
+    },
+    {
+      "action": "update",
+      "type": "class attribute",
+      "name": "guid.result",
+      "oldValue": {
+        "caption": "Идентификатор",
+        "type": null
+      },
+      "newValue": {
+        "caption": "Guid",
+        "type": null
+      },
+      "date": "2020-08-06T05:37:31.666Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "quotes.result",
+      "date": "2020-08-06T05:38:02.615Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "brokerQuotes.result",
+      "date": "2020-08-06T05:38:33.897Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "carrierName.result",
+      "date": "2020-08-06T05:38:51.792Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "estimated.result",
+      "date": "2020-08-06T05:39:26.972Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "rate.result",
+      "date": "2020-08-06T05:39:44.698Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "quoteType.result",
+      "date": "2020-08-06T05:41:15.417Z"
+    },
+    {
+      "action": "update",
+      "type": "class attribute",
+      "name": "results.brokerQuotes",
+      "oldValue": {
+        "itemsClass": "",
+        "type": null
+      },
+      "newValue": {
+        "itemsClass": "result",
+        "type": null
+      },
+      "date": "2020-08-06T05:42:08.699Z"
+    },
+    {
+      "action": "update",
+      "type": "class attribute",
+      "name": "results.brokerQuotes",
+      "oldValue": {
+        "backRef": "",
+        "type": null
+      },
+      "newValue": {
+        "backRef": "brokerQuotes",
+        "type": null
+      },
+      "date": "2020-08-06T05:42:19.028Z"
+    },
+    {
+      "action": "update",
+      "type": "class attribute",
+      "name": "results.quotes",
+      "oldValue": {
+        "itemsClass": "",
+        "backRef": "",
+        "type": null
+      },
+      "newValue": {
+        "itemsClass": "result",
+        "backRef": "quotes",
+        "type": null
+      },
+      "date": "2020-08-06T05:43:20.025Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "state.quotes",
+      "date": "2020-08-06T05:44:59.350Z"
+    },
+    {
+      "action": "create",
+      "type": "workflow",
+      "name": "quotes",
+      "date": "2020-08-06T05:46:18.898Z"
+    },
+    {
+      "action": "create",
+      "type": "workflow state",
+      "name": "send",
+      "date": "2020-08-06T05:46:38.502Z"
+    },
+    {
+      "action": "create",
+      "type": "workflow state",
+      "name": "received",
+      "date": "2020-08-06T05:46:59.452Z"
+    },
+    {
+      "action": "create",
+      "type": "workflow transition",
+      "name": "receive",
+      "date": "2020-08-06T05:50:32.041Z"
+    },
+    {
+      "action": "create",
+      "type": "nav section",
+      "name": "freightQuote",
+      "date": "2020-08-06T05:51:30.918Z"
+    },
+    {
+      "action": "create",
+      "type": "nav item",
+      "name": "quotes.freightQuote",
+      "date": "2020-08-06T05:51:51.714Z"
+    },
+    {
+      "action": "create",
+      "type": "nav item",
+      "name": "brokerQuotes.freightQuote",
+      "date": "2020-08-06T05:52:16.194Z"
+    },
+    {
+      "action": "create",
+      "type": "nav item",
+      "name": "brokers.freightQuote",
+      "date": "2020-08-06T05:52:37.030Z"
+    },
+    {
+      "action": "update",
+      "type": "class attribute",
+      "name": "state.quotes",
+      "oldValue": {
+        "defaultValue": "\"send\"",
+        "type": null
+      },
+      "newValue": {
+        "defaultValue": "send",
+        "type": null
+      },
+      "date": "2020-08-06T06:08:23.391Z"
+    },
+    {
+      "action": "update",
+      "type": "class attribute",
+      "name": "isActive.broker",
+      "oldValue": {
+        "defaultValue": "\"false\"",
+        "type": null
+      },
+      "newValue": {
+        "defaultValue": "false",
+        "type": null
+      },
+      "date": "2020-08-06T06:09:18.578Z"
+    },
+    {
+      "action": "update",
+      "type": "class attribute",
+      "name": "brokers.quotes",
+      "oldValue": {
+        "selConditions": [],
+        "type": null
+      },
+      "newValue": {
+        "selConditions": [
+          {
+            "property": "isActive",
+            "operation": 0,
+            "value": "true",
+            "nestedConditions": []
+          }
+        ],
+        "type": null
+      },
+      "date": "2020-08-06T06:10:33.306Z"
+    },
+    {
+      "action": "update",
+      "type": "class",
+      "name": "broker",
+      "oldValue": {
+        "semantic": "",
+        "key": [
+          null
+        ]
+      },
+      "newValue": {
+        "semantic": "code| |name",
+        "key": [
+          null
+        ]
+      },
+      "date": "2020-08-06T06:27:22.353Z"
+    },
+    {
+      "action": "update",
+      "type": "class",
+      "name": "result",
+      "oldValue": {
+        "semantic": "",
+        "key": [
+          null
+        ]
+      },
+      "newValue": {
+        "semantic": "carrierName",
+        "key": [
+          null
+        ]
+      },
+      "date": "2020-08-06T06:27:53.186Z"
+    },
+    {
+      "action": "create",
+      "type": "class attribute",
+      "name": "dateCreate.quotes",
+      "date": "2020-08-06T06:28:40.577Z"
+    },
+    {
+      "action": "update",
+      "type": "class",
+      "name": "freightClass",
+      "oldValue": {
+        "semantic": "",
+        "key": [
+          null
+        ]
+      },
+      "newValue": {
+        "semantic": "class",
+        "key": [
+          null
+        ]
+      },
+      "date": "2020-08-06T06:29:39.819Z"
+    },
+    {
+      "action": "update",
+      "type": "class",
+      "name": "quotes",
+      "oldValue": {
+        "semantic": "",
+        "key": [
+          null
+        ]
+      },
+      "newValue": {
+        "semantic": "pickup| |",
+        "key": [
+          null
+        ]
+      },
+      "date": "2020-08-06T06:32:29.647Z"
+    },
+    {
+      "action": "update",
+      "type": "class",
+      "name": "quotes",
+      "oldValue": {
+        "semantic": "pickup| |",
+        "key": [
+          null
+        ]
+      },
+      "newValue": {
+        "semantic": "pickup|, |packageType",
+        "key": [
+          null
+        ]
+      },
+      "date": "2020-08-06T06:33:05.303Z"
+    },
+    {
+      "action": "update",
+      "type": "class",
+      "name": "brokerQuotes",
+      "oldValue": {
+        "semantic": "",
+        "key": [
+          null
+        ]
+      },
+      "newValue": {
+        "semantic": "quotes",
+        "key": [
+          null
+        ]
+      },
+      "date": "2020-08-06T06:33:45.452Z"
+    }
+  ]
+}

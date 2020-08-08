@@ -1,0 +1,87 @@
+{
+  "name": "quotes",
+  "caption": "Quotes",
+  "wfClass": "quotes",
+  "startState": "created",
+  "states": [
+    {
+      "name": "created",
+      "caption": "Created",
+      "maxPeriod": "",
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "sent",
+      "caption": "Sent quotes",
+      "maxPeriod": "",
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "received",
+      "caption": "Results received",
+      "maxPeriod": "",
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    }
+  ],
+  "transitions": [
+    {
+      "startState": "created",
+      "finishState": "sent",
+      "name": "send",
+      "caption": "Send quotes",
+      "signBefore": false,
+      "signAfter": false,
+      "confirm": false,
+      "confirmMessage": "",
+      "assignments": [
+        {
+          "key": "state",
+          "value": "sent"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": "created",
+          "nestedConditions": []
+        }
+      ],
+      "roles": []
+    },
+    {
+      "startState": "sent",
+      "finishState": "created",
+      "name": "goBack",
+      "caption": "GO BACK",
+      "signBefore": false,
+      "signAfter": false,
+      "confirm": false,
+      "confirmMessage": "",
+      "assignments": [
+        {
+          "key": "state",
+          "value": "created"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": "sent",
+          "nestedConditions": []
+        }
+      ],
+      "roles": []
+    }
+  ]
+}

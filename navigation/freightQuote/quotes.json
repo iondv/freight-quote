@@ -1,0 +1,20 @@
+{
+  "code": "quotes",
+  "caption": "Quotes",
+  "type": 1,
+  "orderNumber": 10,
+  "title": "",
+  "hint": "",
+  "classname": "quotes",
+  "container": "",
+  "collection": "",
+  "url": "",
+  "conditions": [],
+  "sorting": [
+    {
+      "property": "dateCreate",
+      "mode": 1
+    }  
+  ],
+  "pathChains": []
+}

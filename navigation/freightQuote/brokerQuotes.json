@@ -1,0 +1,15 @@
+{
+  "code": "brokerQuotes",
+  "caption": "Broker quotes ",
+  "type": 1,
+  "orderNumber": 20,
+  "title": "",
+  "hint": "",
+  "classname": "brokerQuotes",
+  "container": "",
+  "collection": "",
+  "url": "",
+  "conditions": [],
+  "sorting": [],
+  "pathChains": []
+}

@@ -1,0 +1,15 @@
+{
+  "isActive": true,
+  "quotes": "23091770-d7ca-11ea-9248-8bb63e0963eb",
+  "brokerQuotes": "33091770-d7ca-11ea-9248-8bb63e0963eb",
+  "carrierName": "Old Dominion Freight Line",
+  "estimated": "5 days",
+  "rate": 238.74,
+  "quoteType": "LTL",
+  "guid": "43091770-d7ca-11ea-9248-8bb63e0963eb",
+  "_class": "result@freight-quote-automation",
+  "_classVer": "",
+  "_creator": "admin@local",
+  "_editor": "admin@local",
+  "___workflowStatus": {}
+}
