@@ -10,7 +10,7 @@
   "checkboxLabel": "label",
   "checkboxInput": "label > input",
   "DUMMY DUMMY DUMMY": "DUMMY",
-  "requestLoadingDate": "#root > div > section > div > div > div.col-md-12.col-lg-10.col-lg-offset-1 > div:nth-child(2) > div > div > div > div.form-group.space-top-lg > div > div.react-datepicker-wrapper > div > span > input",
+  "requestLoadingDate": ".form-group.space-top-lg > div > div.react-datepicker-wrapper > div > span > input",
   "reactDatepickerContainer": "#root > div > section > div > div > div.col-md-12.col-lg-10.col-lg-offset-1 > div:nth-child(2) > div > div > div > div.form-group.space-top-lg > div > div.react-datepicker-popper > div > div > div.react-datepicker__month-container",
   "reactDatepickerMonthAndYear": "#root > div > section > div > div > div.col-md-12.col-lg-10.col-lg-offset-1 > div:nth-child(2) > div > div > div > div.form-group.space-top-lg > div > div.react-datepicker-popper > div > div > div.react-datepicker__month-container > div.react-datepicker__header > div.react-datepicker__current-month",
   "reactDatepickerDays": "div.react-datepicker__week > div.react-datepicker__day",

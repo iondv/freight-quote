@@ -86,7 +86,6 @@ function puppeteerExec(options, type, runnerCodes, ...args) {
       Promise.all(runnerPromises)
         .then(async res => {
           if (Array.isArray(res)) res.forEach(res => pptModule.logs += `${res}\n`)
-          console.log(res)
           await pptModule.browser.close();
           return resolve(pptModule.logs)
         })

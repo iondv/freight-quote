@@ -87,7 +87,12 @@ function postcodeToVal(postcode) {
 async function fillQuoteForm(quote, page) {
 
   // CHOOSING DATE
-  await page.click(selectors.requestLoadingDate);
+
+  const temp = quote.loadingDate.toISOString().substring(0,10).split("-");
+  const reqDate = `${temp[1]}/${temp[2]}/${temp[0]}`;
+  await page.$eval(selectors.requestLoadingDate, (el, loadDate) => el.value = loadDate ? loadDate : el.value, reqDate);
+
+  /*await page.click(selectors.requestLoadingDate); // TODO НЕ РАБОТАЕТ когда английский? да и можно без датапикера Error: date is not present in the date picker: 2020-08-12T00:00:00.000Z
   await page.waitForSelector(selectors.reactDatepickerContainer, {visible: true});
   const [match, month, year] = /(\w+)\s+(\d+)/.exec(await page.$eval(selectors.reactDatepickerMonthAndYear, el => el.innerText));
   const monthISO = ((month) => {
@@ -147,11 +152,11 @@ async function fillQuoteForm(quote, page) {
     }
     if (tempMonth.length < 2) tempMonth = '0' + tempMonth;
     if (day.length < 2) day = '0' + day;
-    const dateISO = (new Date((new Date(`${tempYear}-${tempMonth}-${day}T14:00:00.000Z`)).getTime() - 1000 * 60 * 60 * 24)).toISOString();
+    const dateISO = (new Date((new Date(`${tempYear}-${tempMonth}-${day}T14:00:00.000Z`)).getTime() - 1000 * 60 * 60 * 24)).toISOString(); // TODO часовой пояс сервера может быть другой.
     dayLinks[dateISO] = dayEl;
     lastDayNum = dayNum;
   }
-  if (dayLinks[quote.loadingDate.toISOString()]) {
+  if (dayLinks[quote.loadingDate.toISOString()]) { // TODO Не учитывает отображение дат на английскую раскладку языка. Первое число месяц, а не дата.
     const chosenDateEl = dayLinks[quote.loadingDate.toISOString()];
     const status = await chosenDateEl.evaluate(el => el.getAttribute('aria-disabled'))
     if (status === 'true')
@@ -159,7 +164,7 @@ async function fillQuoteForm(quote, page) {
     else await chosenDateEl.click();
   } else {
     throw new Error('date is not present in the date picker: ' + quote.loadingDate.toISOString());
-  }
+  }*/
   // DATE CHOSEN
 
   const freightClassVal = quote.freightClass || "We\'ll calculate for you";

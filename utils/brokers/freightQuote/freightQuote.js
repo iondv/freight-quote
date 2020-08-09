@@ -14,6 +14,7 @@ const BROKER_CODE = 'freightquote.com' // TODO Как экспортироват
  * @param ppt.browser
  * @param ppt.page
  * @param ppt.saveScreenshot
+ * @param ppt.savePdf
  * @param param
  * @param param.quote - quote
  * @param param.brokers - brokers
@@ -21,7 +22,7 @@ const BROKER_CODE = 'freightquote.com' // TODO Как экспортироват
  */
 module.exports = function (options, ppt, param) { //checkQuote
   return new Promise(async (resolve, reject) => {
-    console.log('Check', url)
+    console.log((new Date).toISOString(), 'Check', url)
     const page = ppt.page;
     const quote = param.quote.base;
     const broker = param.brokers.reduce((res, item) => item.base.code === BROKER_CODE ? item.base : res ? res : null, null) // Ищем объект брокера
@@ -40,6 +41,10 @@ module.exports = function (options, ppt, param) { //checkQuote
       // ]);
       await page.goto(url, {timeout: 30000}) //, waitUntil: 'networkidle0'
       await page.waitForSelector(selectors.formGroup1, {visible: true});
+      const asseptCookie = await page.$('#CybotCookiebotDialogBodyButtonAccept')
+      if (asseptCookie)
+        asseptCookie.click(); // Без этого отправка кнопка отправки не срабатывает
+
       await utils.fillQuoteForm(param.quote.base, page);
 
     } catch (e) {
@@ -49,10 +54,10 @@ module.exports = function (options, ppt, param) { //checkQuote
     }
 
     try {
-      const reqScrn = await ppt.saveScreenshot(options, page, 'request-freightquote.png');
+      const reqScrn = await ppt.saveScreenshot(options, page, 'req-freightquote.png');
       if (reqScrn && reqScrn.id)
         brokerQuoteData.quotesScreenshot = reqScrn.id;
-      const reqPdf = await ppt.savePdf(options, page, 'request-freightquote.pdf');
+      const reqPdf = await ppt.savePdf(options, page, 'req-freightquote.pdf');
       if (reqPdf && reqPdf.id)
         brokerQuoteData.quotesPdf = reqPdf.id;
     } catch (e) {
@@ -61,10 +66,12 @@ module.exports = function (options, ppt, param) { //checkQuote
     }
 
     try {
-      // await Promise.all([
-      //   page.waitForNavigation(),
-      //   page.click(selectors.submitBtn)
-      // ]);
+      await page.waitFor(1000)
+      const sendBtn = await page.$(selectors.submitBtn)
+      if (sendBtn) {
+        await sendBtn.click()
+      }
+      await page.waitForSelector('.emphasis-lg')
     } catch (e) {
       isRequestSuccess = false
       brokerQuoteData.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
@@ -75,12 +82,11 @@ module.exports = function (options, ppt, param) { //checkQuote
       // await page.waitForSelector(selectors.resultQuotes, {visible: true});
       // const acceptCookiesPrompt = await page.$(selectors.acceptCookies);
       // if (acceptCookiesPrompt) await page.click(selectors.acceptCookies);
-
       try {
-        const respScrn = await ppt.saveScreenshot(options, page, 'result-freightquote.png');
+        const respScrn = await ppt.saveScreenshot(options, page, 'res-freightquote.png');
         if (respScrn && respScrn.id)
           brokerQuoteData.resultScreenshot = respScrn.id;
-        const respPdf = await ppt.savePdf(options, page, 'result-freightquote.pdf');
+        const respPdf = await ppt.savePdf(options, page, 'res-freightquote.pdf');
         if (respPdf && respPdf.id)
           brokerQuoteData.resultPdf = respPdf.id;
       } catch (e) {
