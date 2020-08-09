@@ -7,7 +7,7 @@ const path = require('path');
 
 const opts = { // TODO Из деплой параметры запуска браузера
   headless: process.env.NODE_ENV !== 'development',
-  defaultViewport: {
+  //defaultViewport: {
     headless: !(process.env.NODE_ENV && process.env.NODE_ENV === 'development'), // TODO надо как-то оставить режим development
     width: 1920,
     height: 1080,
@@ -16,7 +16,7 @@ const opts = { // TODO Из деплой параметры запуска бр�
       '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-accelerated-2d-canvas', '--disable-gpu',
       '--ignore-certificate-errors'], //'--window-size=1920x1080'
     isMobile: false, hasTouch: false, timeout:0
-  }
+  //}
 };
 // TODO в деплой параметры страницы
 const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36 Edg/84.0.522.52';
