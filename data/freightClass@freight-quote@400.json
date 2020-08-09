@@ -1,6 +1,6 @@
 {
-  "class": "100",
-  "_class": "freightClass@freight-quote-automation",
+  "class": "400",
+  "_class": "freightClass@freight-quote",
   "_classVer": "",
   "_creator": "admin@local",
   "___workflowStatus": {}

@@ -1,7 +1,10 @@
 {
-  "name": "freight-quote-automation",
+  "name": "freight-quote",
   "description": "Freight quote",
   "version": "0.0.0",
+  "engines": {
+    "ion": "4.0.0"
+  },
   "ionModulesDependencies": {
     "ionadmin": "*",
     "registry": "*"

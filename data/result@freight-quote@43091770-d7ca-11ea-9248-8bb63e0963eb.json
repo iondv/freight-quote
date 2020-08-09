@@ -7,7 +7,7 @@
   "rate": 238.74,
   "quoteType": "LTL",
   "guid": "43091770-d7ca-11ea-9248-8bb63e0963eb",
-  "_class": "result@freight-quote-automation",
+  "_class": "result@freight-quote",
   "_classVer": "",
   "_creator": "admin@local",
   "_editor": "admin@local",

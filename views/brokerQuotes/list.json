@@ -1,6 +1,27 @@
 {
   "columns": [
     {
+      "property": "broker",
+      "caption": "Broker",
+      "type": 2,
+      "orderNumber": 20,
+      "hint": "",
+      "size": null,
+      "maskName": "",
+      "mask": "",
+      "mode": 0,
+      "commands": null,
+      "required": false,
+      "readonly": false,
+      "sorted": false,
+      "selectionPaginated": false,
+      "visibility": "",
+      "enablement": "",
+      "obligation": "",
+      "historyDisplayMode": 0,
+      "tags": ""
+    },
+    {
       "property": "quotes",
       "caption": "Quotes",
       "type": 2,

@@ -5,9 +5,9 @@ const brokerCodes = {
   // 'freightquote.com': freightQuote
   'freightquote.com': require('./freightQuote/freightQuote.js')
 }
-function code2broker(code) {
-  return brokerCodes[code] ? brokerCodes[code] : null;
-}
+// function code2broker(code) {
+//   return brokerCodes[code] ? brokerCodes[code] : null;
+// }
 
 function checkQuote(options, quote, broker) {
   const brokerActions = code2broker(broker.code);
@@ -21,4 +21,12 @@ function checkQuote(options, quote, broker) {
       });
   });
 }
-module.exports.checkQuote = checkQuote;
+
+function getQuoteRequest(code) {
+  return brokerCodes[code] ? brokerCodes[code] : null;
+}
+
+module.exports = {
+  checkQuote,
+  getQuoteRequest
+};

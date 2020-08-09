@@ -5,81 +5,99 @@ const url = 'https://www.freightquote.com/book/#/single-page-quote';
 const fs = require('fs')
 const path = require('path')
 
-async function checkQuote(options, page, quote) {
-  console.log('анализ ', url)
-  let logs = '';
-  const scr = {req: null, reqPdf: null, quote: null, quotePdf: null}
-  const promiseFilesToUpload = [];
-  let isRequestSuccess = true;
-  try {
-    // await Promise.all([
-    //   page.waitForNavigation(),
-    //   page.goto(url)
-    // ]);
+const BROKER_CODE = 'freightquote.com' // TODO Как экспортировать код в deploy для модуля пупитер, чтобы в двух местах код не задавать?
 
-    await page.goto(url, {timeout: 30000}) //, waitUntil: 'networkidle0'
-    await page.waitForSelector(selectors.formGroup1, {visible: true});
-    await utils.fillQuoteForm(quote, page);
+/**
+ * Broker adaptor for freightquote.com
+ * @param options
+ * @param ppt
+ * @param ppt.browser
+ * @param ppt.page
+ * @param ppt.saveScreenshot
+ * @param param
+ * @param param.quote - quote
+ * @param param.brokers - brokers
+ * @returns {Promise<unknown>}
+ */
+module.exports = function (options, ppt, param) { //checkQuote
+  return new Promise(async (resolve, reject) => {
+    console.log('Check', url)
+    const page = ppt.page;
+    const quote = param.quote.base;
+    const broker = param.brokers.reduce((res, item) => item.base.code === BROKER_CODE ? item.base : res ? res : null, null) // Ищем объект брокера
+    if(!broker)
+      return reject(`Demand broker object for code '${BROKER_CODE}'`)
 
-  } catch(e) {
-    logs = `${logs}\n${e.code}: ${e.message}`
-    isRequestSuccess = false
-    console.error(e);
-  }
-
-  try {
-    await page.screenshot({path: path.join(__dirname,'request.png'), fullPage: true});
-    scr.req = await options.dataRepo.fileStorage.accept({name: 'request.png', buffer: fs.readFileSync(`${path.join(__dirname,'request.png')}`)})
-    promiseFilesToUpload.push(options.dataRepo.fileStorage.accept({name: 'request.png', buffer: fs.readFileSync(`${path.join(__dirname,'request.png')}`)}))
-    console.log('request screenshot saved in request.png');
-    scr.reqPdf =  await page.pdf({path: path.join(__dirname,'request.pdf'), fullPage: true});
-    promiseFilesToUpload.push(options.dataRepo.fileStorage.accept({name: 'request.pdf', buffer: fs.readFileSync(`${path.join(__dirname,'request.pdf')}`)}))
-    console.log('request pdf saved in request.pdf');
-  } catch(e) {
-    logs = `${logs}\n${e.code}: ${e.message}`
-    console.error(e)
-  }
-
-
-  try {
-    await Promise.all([
-      page.waitForNavigation(),
-      page.click(selectors.submitBtn)
-    ]);
-  } catch(e) {
-    isRequestSuccess = false
-    logs = `${logs}\n${e.code}: ${e.message}`
-    console.error(e);
-
-  }
-  if(isRequestSuccess) {
-  // await utils.parseQuoteForm(page);
-  // await page.waitForSelector(selectors.resultQuotes, {visible: true});
-  // const acceptCookiesPrompt = await page.$(selectors.acceptCookies);
-  // if (acceptCookiesPrompt) await page.click(selectors.acceptCookies);
-  // await page.screenshot({path: path.join(__dirname,'quotes.png'), fullPage: true});
-    // promiseFilesToUpload.push(options.dataRepo.fileStorage.accept({name: 'quotes.png', buffer: fs.readFileSync(`${path.join(__dirname,'quotes.png')}`, dir)}))
-
-  // console.log('result screenshot saved in quotes.png');
-  // await page.pdf({path: path.join(__dirname,'quotes.pdf'), fullPage: true});
-    // promiseFilesToUpload.push(options.dataRepo.fileStorage.accept({name: 'quotes.pdf', buffer: fs.readFileSync(`${path.join(__dirname,'quotes.pdf')}`, dir)}))
-  // console.log('result pdf saved in quotes.pdf');
-  }
-
-  try {
-    const createdFiles = Promise.all(promiseFilesToUpload);
+    let isRequestSuccess = true;
     const brokerQuoteData = {
-      "logs" : logs,
-      "quotes" : quote.id,
-      "quotesScreenshot" : scr.req ? scr.req.id : null,
-      "quotesPdf" : scr.reqPdf  ? scr.reqPdf.id : null,
-      "resultScreenshot" : scr.quote ? scr.quote.id : null,
-      "resultPdf" : scr.quotePdf ? scr.quotePdf.id : null,
+      "logs": '',
+      "quotes": param.quote.id
     }
-    const brokeQuotes = await options.dataRepo.createItem('brokerQuotes@freight-quote-automation', brokerQuoteData)
-    console.log(brokeQuotes)
-  } catch(e) {
-    console.error(e);
-  }
+    try {
+      // await Promise.all([
+      //   page.waitForNavigation(),
+      //   page.goto(url)
+      // ]);
+      await page.goto(url, {timeout: 30000}) //, waitUntil: 'networkidle0'
+      await page.waitForSelector(selectors.formGroup1, {visible: true});
+      await utils.fillQuoteForm(param.quote.base, page);
+
+    } catch (e) {
+      brokerQuoteData.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
+      isRequestSuccess = false
+      console.error(e);
+    }
+
+    try {
+      const reqScrn = await ppt.saveScreenshot(options, page, 'request-freightquote.png');
+      if (reqScrn && reqScrn.id)
+        brokerQuoteData.quotesScreenshot = reqScrn.id;
+      const reqPdf = await ppt.savePdf(options, page, 'request-freightquote.pdf');
+      if (reqPdf && reqPdf.id)
+        brokerQuoteData.quotesPdf = reqPdf.id;
+    } catch (e) {
+      brokerQuoteData.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
+      console.error(e)
+    }
+
+    try {
+      // await Promise.all([
+      //   page.waitForNavigation(),
+      //   page.click(selectors.submitBtn)
+      // ]);
+    } catch (e) {
+      isRequestSuccess = false
+      brokerQuoteData.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
+      console.error(e);
+    }
+    if (true || isRequestSuccess) {
+      // await utils.parseQuoteForm(page);
+      // await page.waitForSelector(selectors.resultQuotes, {visible: true});
+      // const acceptCookiesPrompt = await page.$(selectors.acceptCookies);
+      // if (acceptCookiesPrompt) await page.click(selectors.acceptCookies);
+
+      try {
+        const respScrn = await ppt.saveScreenshot(options, page, 'result-freightquote.png');
+        if (respScrn && respScrn.id)
+          brokerQuoteData.resultScreenshot = respScrn.id;
+        const respPdf = await ppt.savePdf(options, page, 'result-freightquote.pdf');
+        if (respPdf && respPdf.id)
+          brokerQuoteData.resultPdf = respPdf.id;
+      } catch (e) {
+        brokerQuoteData.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
+        console.error(e)
+      }
+    }
+    // TODO save results.
+    try {
+      // console.log(brokerQuoteData)
+      const brokeQuotes = await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteData)
+      console.log(brokeQuotes.base)
+    } catch (e) {
+      console.error(e);
+      return reject(e)
+    }
+    return resolve()
+  })
 }
-module.exports.checkQuote = checkQuote;
+// module.exports.checkQuote = checkQuote;

@@ -17,7 +17,7 @@
   "brokerQuotes": ["33091770-d7ca-11ea-9248-8bb63e0963eb"],
   "results": ["43091770-d7ca-11ea-9248-8bb63e0963eb","43091770-d7ca-11ea-9248-8bb63e0963eb"],
   "guid": "23091770-d7ca-11ea-9248-8bb63e0963eb",
-  "_class": "quotes@freight-quote-automation",
+  "_class": "quotes@freight-quote",
   "_classVer": "",
   "_creator": "admin@local",
   "_editor": "admin@local",

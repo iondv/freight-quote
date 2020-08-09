@@ -1,5 +1,5 @@
 {
-  "namespace": "freight-quote-automation",
+  "namespace": "freight-quote",
   "parametrised": true,
   "deployer": "built-in",
   "globals": {
@@ -12,13 +12,13 @@
     "explicitTopMenu": [
       {
         "id": "freightQuote",
-        "url": "/registry/freight-quote-automation@quotes",
+        "url": "/registry/freight-quote@quotes",
         "caption": "Freight quote"
       }
     ],
     "plugins": {
       "workflowEvents" : {
-        "module": "applications/freight-quote-automation/utils/workflowEvents.js",
+        "module": "applications/freight-quote/utils/workflowEvents.js",
         "initMethod": "init",
         "initLevel": 1,
         "options": {
@@ -42,13 +42,13 @@
       "globals": {
         "eagerLoading": {
           "*": {
-            "quotes@freight-quote-automation": {
+            "quotes@freight-quote": {
               "item": [
                 "results.brokerQuotes.quotes",
                 "results.quotes"
               ]
             },
-            "brokerQuotes@freight-quote-automation": {
+            "brokerQuotes@freight-quote": {
               "item": [
                 "results.brokerQuotes.quotes",
                 "results.quotes"
@@ -56,7 +56,7 @@
             }
           }
         },
-        "defaultPath": "freight-quote-automation@quotes",
+        "defaultPath": "freight-quote@quotes",
         "inlineForm": true,
         "logo": "",
         "statics": null,
@@ -66,7 +66,7 @@
             "initMethod": "init",
             "initLevel": 0,
             "options": {
-              "tplDir": "applications/freight-quote-automation/export/item",
+              "tplDir": "applications/freight-quote/export/item",
               "injectors": []
             }
           },
@@ -75,7 +75,7 @@
             "initMethod": "init",
             "initLevel": 0,
             "options": {
-              "tplDir": "applications/freight-quote-automation/export/item",
+              "tplDir": "applications/freight-quote/export/item",
               "injectors": []
             }
           },
@@ -84,7 +84,7 @@
             "initMethod": "init",
             "initLevel": 0,
             "options": {
-              "tplDir": "applications/freight-quote-automation/export/list",
+              "tplDir": "applications/freight-quote/export/list",
               "log": "ion://sysLog"
             }
           },
@@ -93,7 +93,7 @@
             "initMethod": "init",
             "initLevel": 0,
             "options": {
-              "tplDir": "applications/freight-quote-automation/export/list",
+              "tplDir": "applications/freight-quote/export/list",
               "log": "ion://sysLog"
             }
           },
