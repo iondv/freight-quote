@@ -179,8 +179,8 @@ async function fillQuoteForm(quote, page) {
   await page.click(selectors.formatProposal);
   await clearAndFill(page, selectors.itemDescription, quote.description);
   await page.select(selectors.packaging, packagingTypeVal(quote.packageType));
-  await clearAndFill(page, selectors.palletLength, quote.length);
-  await clearAndFill(page, selectors.palletWidth, quote.width);
+  await clearAndFill(page, selectors.palletLength, quote.length || 48);
+  await clearAndFill(page, selectors.palletWidth, quote.width || 40);
   await clearAndFill(page, selectors.palletHeight, quote.height);
   await clearAndFill(page, selectors.weight, quote.weight);
   await clearAndFill(page, selectors.quantity, quote.quantity);
