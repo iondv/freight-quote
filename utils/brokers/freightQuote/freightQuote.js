@@ -92,7 +92,7 @@ module.exports = function (options, ppt, param) { //checkQuote
     try {
       // console.log(brokerQuoteData)
       const brokeQuotes = await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteData)
-      console.log(brokeQuotes.base)
+      //console.log(brokeQuotes.base)
     } catch (e) {
       console.error(e);
       return reject(e)

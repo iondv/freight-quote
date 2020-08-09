@@ -1,4 +1,3 @@
-const brokersLib = require('./brokers/lib.js');
 const {puppeteerExec} = require('./puppeteer.js');
 
 function workflowEvents(options) {
