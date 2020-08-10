@@ -27,5 +27,11 @@
   "freightClass": "#root > div > section > div > div > div.col-md-12.col-lg-10.col-lg-offset-1 > div:nth-child(4) > div > div:nth-child(2) > div.space-top-md.col-md-12.no-padding > ul > li > div > div.package-container.col-md-12.no-padding > div.form-group.col-md-6.freight-class > select",
   "submitBtn": "#root > div > section > div > div > div > button",
   "resultQuotes": ".card",
+  "resultsRow": ".quote-result-card",
+  "carrierName": "h3.space-bottom-sm",
+  "guaranteed": "span.guaranteed-service",
+  "transitTime": "span.bold",
+  "quoteType": "span.space-left-sm.quote-type",
+  "transitRate": "h4.emphasis.bold",
   "acceptCookies": "#CybotCookiebotDialogBodyButtonAccept"
 }
