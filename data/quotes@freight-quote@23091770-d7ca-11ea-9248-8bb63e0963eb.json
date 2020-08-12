@@ -1,7 +1,10 @@
 {
   "isActive": true,
-  "brokers": ["13091770-d7ca-11ea-9248-8bb63e0963eb"],
-  "loadingDate": "2020-08-09T14:00:00+00:00",
+  "brokers": [
+    "13091770-d7ca-11ea-9248-8bb63e0963eb",
+    "13091770-d7ca-11ea-9248-8b343e0963eb"
+  ],
+  "loadingDate": "2020-08-13T14:00:00+00:00",
   "pickup": "CA 92518",
   "delivery": "NY 10002",
   "description": "test",

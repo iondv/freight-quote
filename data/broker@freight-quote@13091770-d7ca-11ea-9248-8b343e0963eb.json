@@ -1,0 +1,13 @@
+{
+  "isActive": true,
+  "code": "freightera.com",
+  "name": "Freightera",
+  "user": "",
+  "password": "",
+  "guid": "13091770-d7ca-11ea-9248-8b343e0963eb",
+  "_class": "broker@freight-quote",
+  "_classVer": "",
+  "_creator": "admin@local",
+  "_editor": "admin@local",
+  "___workflowStatus": {}
+}

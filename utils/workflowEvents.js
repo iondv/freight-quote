@@ -10,7 +10,6 @@ function workflowEvents(options) {
             options.dataRepo.getItem(ev.item, null, {})
               .then((quoteItem) => {
                 if (quoteItem.base['brokers'] && quoteItem.base['brokers'].length !== 0) {
-                  console.log('Полно в брокерах')
                   const brokersPromises = quoteItem.base['brokers']
                     .map(brokerId => options.dataRepo.getItem('broker@freight-quote', brokerId).then(item => {
                       if (item.base.isActive)  // Проверяем, что  брокер активен

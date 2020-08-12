@@ -8,7 +8,7 @@ const path = require('path');
 const opts = { // TODO Из деплой параметры запуска браузера
   headless: process.env.NODE_ENV !== 'development',
   //defaultViewport: {
-    headless: !(process.env.NODE_ENV && process.env.NODE_ENV === 'development'), // TODO надо как-то оставить режим development
+    //headless: !(process.env.NODE_ENV && process.env.NODE_ENV === 'development'), // TODO надо как-то оставить режим development
     width: 1920,
     height: 1080,
     deviceScaleFactor: 1,
@@ -25,7 +25,8 @@ const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 
 // Сейчас параметры в объектах класса brokers, можно и из них брать. Но можно и жестко в деплой прописать ранеры
 const runners = {
   'brokers': {
-    'freightquote.com': './brokers/freightQuote/freightQuote.js' // TODO По идее бы код брать из самой утилиты?? иначе в двух местах надо задавать в утилите для фильтрации брокеров и здесь для подключения
+    'freightquote.com': './brokers/freightQuote/freightQuote.js', // TODO По идее бы код брать из самой утилиты?? иначе в двух местах надо задавать в утилите для фильтрации брокеров и здесь для подключения
+    'freightera.com': './brokers/freightera/freightera.js'
   }
 }
 
