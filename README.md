@@ -16,7 +16,7 @@ Login: **demo**, password: **ion-demo**.
 Additional advantages:
 - Open source code for all system components – https://github.com/iondv/freight-quote;
 - Open software used for DBMS and server OS (running for linux and windows);
-- Any adaptation and modernization of the system is available, including data structures modernization without programming in a visual editor. You can try it by downloading the zip archive of the repository in the editor at https://studio.iondv.com. The UML schema is deploy into a working application in 80 seconds, see the [video]( https://youtu.be/s7q9_YXkeEo)
+- Any adaptation and modernization of the system is available, including data structures modernization without programming in a visual editor. You can try it by downloading the zip archive of the repository in the editor at https://studio.iondv.com. The UML schema is deployed into a working application in 80 seconds, see the [video]( https://youtu.be/s7q9_YXkeEo)
 - Launch your own version in a few minutes – see [How to get](#how-to-get)
 
 ## How to get?
