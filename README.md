@@ -5,6 +5,8 @@ IONDV. Freight Quote is a software solution to search for and display informatio
 
 The demo version app makes queries to the real freight sites and shows the actual quotes for shipping cargo. A user inserts dimensions of the cargo and such postal information as pickup and delivery localities in the system and gets png/pdf results with different freights companies terms. The queries are implemented using Puppeteer library. Such implementation principle may be used to many other examples of apps for collecting data from websites and displaying the results. The demo version is created to demonstrate this process and the system can be developed into a beautiful and responsive web-app that suits your goals.
 
+<h1 align="center"> <img src="/iondv-freight-quote.jpg" alt="IONDV. Freight Quote" align="center"></h1>  
+
 ## Demo
 
 Demo access to view the system without registration: https://freight-quote.iondv.ru/
