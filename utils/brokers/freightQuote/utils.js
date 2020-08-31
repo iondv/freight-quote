@@ -18,8 +18,9 @@ function packagingTypeVal(type) {
 }
 
 function postcodeToVal(postcode) {
-  const [match, state, code] = /(\w+)\s+(\d+)/.exec(postcode);
-  return `${state} - ${code}`;
+  const [, state, code] = /(?:(\w+)\s+)?(\d+)/.exec(postcode);
+  // return `${state} - ${code}`;
+  return `${code}`;
 }
 
 // async function parseQuoteForm(page) {
@@ -171,18 +172,36 @@ async function fillQuoteForm(quote, page) {
   await page.select(selectors.freightClass, freightClassVal);
   await page.waitForSelector(selectors.pickupCityOrPostalCode, {visible: true});
   await page.type(selectors.pickupCityOrPostalCode, postcodeToVal(quote.pickup));
-  await page.waitForSelector(selectors.formatProposal, {visible: true});
-  await page.click(selectors.formatProposal);
+  try {
+    await page.waitForSelector(selectors.formatProposal, {visible: true});
+    await page.click(selectors.formatProposal);
+  } catch (e) {
+    throw new Error('Departure location is not found.');
+  }
   await page.waitForSelector(selectors.deliveryCityOrPostalCode, {visible: true});
   await page.type(selectors.deliveryCityOrPostalCode, postcodeToVal(quote.delivery));
-  await page.waitForSelector(selectors.formatProposal, {visible: true});
-  await page.click(selectors.formatProposal);
+  try {
+    await page.waitForSelector(selectors.formatProposal, {visible: true});
+    await page.click(selectors.formatProposal);
+  } catch (e) {
+    throw new Error('Arrival location is not found.');
+  }
   await clearAndFill(page, selectors.itemDescription, quote.description);
   await page.select(selectors.packaging, packagingTypeVal(quote.packageType));
-  await clearAndFill(page, selectors.palletLength, quote.length || 48);
-  await clearAndFill(page, selectors.palletWidth, quote.width || 40);
+  let length, width;
+  if (quote.length && quote.width) {
+    length = quote.length;
+    width = quote.width;
+  } else {
+    const dimensions = /[A-Za-z]+([0-9]+)x([0-9]+)/.exec(quote.packageType);
+    if (!dimensions) throw new Error(`dimensions can not be deduced from packageType: ${quote.packageType}`);
+    [, length, width] = dimensions;
+  }
+  await clearAndFill(page, selectors.palletLength, length);
+  await clearAndFill(page, selectors.palletWidth, width);
   await clearAndFill(page, selectors.palletHeight, quote.height);
   await clearAndFill(page, selectors.weight, quote.weight);
   await clearAndFill(page, selectors.quantity, quote.quantity);
+  await page.waitFor(50000);
 }
 module.exports.fillQuoteForm = fillQuoteForm;

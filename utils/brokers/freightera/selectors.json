@@ -17,11 +17,15 @@
   "freightClass": "#Class_Index_0",
   "submitBtn": "#quoteSubmitBtnID",
   "resultQuotes": "#result > div.form-body > div",
-  "resultsRow": "div.panel-body > div:nth-child(0)",
+  "resultsRow": "div.panel-body > div:not(.panel-get-quote-button)",
   "carrierName": "span.quote-name",
   "transitTime": "div.quote-delivery-date",
   "transitRate": "div.quote-price",
   "acceptCookies": "#Cookie-Policy > span",
   "loader": "#loader",
-  "flexibleCheckbox": ".checkbox-label"
+  "flexibleCheckbox": ".checkbox-label",
+  "modalButtons": "#modal-submit-buttons > button",
+  "modalLabel": "#temporalModalLabel",
+  "paidFeatureParcel": "#parcelWeightModal[aria-hidden=\"false\"]",
+  "parcelModalLabel": "#parcelModalLabel"
 }

@@ -18,8 +18,9 @@ function packagingTypeVal(type) {
 }
 
 function postcodeToVal(postcode) {
-  const [match, state, code] = /(\w+)\s+(\d+)/.exec(postcode);
-  return `${state}, ${code}`;
+  const [, state, code] = /(?:(\w+)\s+)?(\d+)/.exec(postcode);
+  //return `${state}, ${code}`;
+  return `${code}`;
 }
 
 async function fillLTLForm(quote, page) {
@@ -30,16 +31,39 @@ async function fillLTLForm(quote, page) {
   await page.select(selectors.freightClass, quote.freightClass);
   await page.waitForSelector(selectors.pickupCityOrPostalCode, {visible: true});
   await page.type(selectors.pickupCityOrPostalCode, postcodeToVal(quote.pickup));
-  await page.waitForSelector(selectors.pickupFormatProposal, {visible: true});
-  await page.click(selectors.pickupFormatProposal);
+  try {
+    await page.waitForSelector(selectors.pickupFormatProposal, {visible: true});
+    await page.click(selectors.pickupFormatProposal);
+  } catch (e) {
+    throw new Error('Departure location is not found.');
+  }
+  const pickupLocationCheck = await page.$eval(selectors.pickupCityOrPostalCode, el => el.value);
+  if (!pickupLocationCheck.includes(postcodeToVal(quote.pickup)))
+    throw new Error('Departure location is not found.');
   await page.waitForSelector(selectors.deliveryCityOrPostalCode, {visible: true});
   await page.type(selectors.deliveryCityOrPostalCode, postcodeToVal(quote.delivery));
-  await page.waitForSelector(selectors.deliveryFormatProposal, {visible: true});
-  await page.click(selectors.deliveryFormatProposal);
+  try {
+    await page.waitForSelector(selectors.deliveryFormatProposal, {visible: true});
+    await page.click(selectors.deliveryFormatProposal);
+  } catch (e) {
+    throw new Error('Arrival location is not found.');
+  }
+  const deliveryLocationCheck = await page.$eval(selectors.deliveryCityOrPostalCode, el => el.value);
+  if (!deliveryLocationCheck.includes(postcodeToVal(quote.delivery)))
+    throw new Error('Arrival location is not found.');
   await clearAndFill(page, selectors.itemDescription, quote.description);
   await page.select(selectors.packaging, packagingTypeVal(quote.packageType));
-  await clearAndFill(page, selectors.palletLength, quote.length);
-  await clearAndFill(page, selectors.palletWidth, quote.width);
+  let length, width;
+  if (quote.length && quote.width) {
+    length = quote.length;
+    width = quote.width;
+  } else {
+    const dimensions = /[A-Za-z]+([0-9]+)x([0-9]+)/.exec(quote.packageType);
+    if (!dimensions) throw new Error(`dimensions can not be deduced from packageType: ${quote.packageType}`);
+    [, length, width] = dimensions;
+  }
+  await clearAndFill(page, selectors.palletLength, length);
+  await clearAndFill(page, selectors.palletWidth, width);
   await clearAndFill(page, selectors.palletHeight, quote.height);
   await clearAndFill(page, selectors.weight, quote.weight);
   await clearAndFill(page, selectors.quantity, quote.quantity);
@@ -54,12 +78,20 @@ async function fillFTLForm(quote, page) {
   await page.click(selectors.flexibleCheckbox);
   await page.waitForSelector(selectors.pickupCityOrPostalCode, {visible: true});
   await page.type(selectors.pickupCityOrPostalCode, postcodeToVal(quote.pickup));
-  await page.waitForSelector(selectors.pickupFormatProposal, {visible: true});
-  await page.click(selectors.pickupFormatProposal);
+  try {
+    await page.waitForSelector(selectors.pickupFormatProposal, {visible: true});
+    await page.click(selectors.pickupFormatProposal);
+  } catch (e) {
+    throw new Error('Departure location is not found.');
+  }
   await page.waitForSelector(selectors.deliveryCityOrPostalCode, {visible: true});
   await page.type(selectors.deliveryCityOrPostalCode, postcodeToVal(quote.delivery));
-  await page.waitForSelector(selectors.deliveryFormatProposal, {visible: true});
-  await page.click(selectors.deliveryFormatProposal);
+  try {
+    await page.waitForSelector(selectors.deliveryFormatProposal, {visible: true});
+    await page.click(selectors.deliveryFormatProposal);
+  } catch (e) {
+    throw new Error('Arrival location is not found.');
+  }
   await clearAndFill(page, selectors.itemDescription, quote.description);
   await page.select(selectors.packaging, packagingTypeVal(quote.packageType));
   await clearAndFill(page, selectors.weight, quote.weight*quote.quantity);
