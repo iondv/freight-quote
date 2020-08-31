@@ -23,7 +23,7 @@
   "transitRate": "div.quote-price",
   "acceptCookies": "#Cookie-Policy > span",
   "loader": "#loader",
-  "flexibleCheckbox": ".checkbox-label",
+  "flexibleCheckbox": "#flexibleDate",
   "modalButtons": "#modal-submit-buttons > button",
   "modalLabel": "#temporalModalLabel",
   "paidFeatureParcel": "#parcelWeightModal[aria-hidden=\"false\"]",

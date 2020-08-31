@@ -47,17 +47,12 @@ module.exports = function (options, ppt, param) {
     }
 
     try {
-      console.log('1');
       const reqScrn = await ppt.saveScreenshot(options, page, 'req-freightera.png');
-      console.log('2');
       if (reqScrn && reqScrn.id)
         brokerQuoteDataLTL.quotesScreenshot = reqScrn.id;
-      console.log('3');
       const reqPdf = await ppt.savePdf(options, page, 'req-freightera.pdf');
-      console.log('4');
       if (reqPdf && reqPdf.id)
         brokerQuoteDataLTL.quotesPdf = reqPdf.id;
-      console.log('5');
     } catch (e) {
       brokerQuoteDataLTL.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
       console.error(e)
@@ -88,15 +83,13 @@ module.exports = function (options, ppt, param) {
         modalWindowText = await modalWindow.evaluate(el => el.innerText);
       if (modalWindow && modalWindowText.includes('quote is unavailable')) {
         const error = new Error('Freightera: Automated quote is not available for these request parameters.');
-        console.error(error);
-        brokerQuoteDataLTL.logs += `${error.code ? error.code + ' ' + error.message : error.message}\n`;
-        await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteDataLTL);
-        return resolve();
+        throw error;
       }
       await page.waitForSelector(selectors.loader, {hidden: true, timeout: resultsTimeout});
     } catch (e) {
       isLTLRequestSuccess = false
       brokerQuoteDataLTL.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
+      await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteDataLTL);
       console.error(e);
     }
     if (isLTLRequestSuccess) {
@@ -163,7 +156,7 @@ module.exports = function (options, ppt, param) {
     } catch (e) {
       brokerQuoteDataFTL.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
       console.error(e)
-      return reject(e);
+      // return reject(e);
     }
     try {
       const acceptCookies = await page.$(selectors.acceptCookies);
@@ -195,15 +188,13 @@ module.exports = function (options, ppt, param) {
         modalWindowText = await modalWindow.evaluate(el => el.innerText);
       if (modalWindow && modalWindowText.includes('quote is unavailable')) {
         const error = new Error('Freightera: Automated quote is not available for these request parameters.');
-        console.error(error);
-        brokerQuoteDataFTL.logs += `${error.code ? error.code + ' ' + error.message : error.message}\n`;
-        await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteDataFTL);
-        return resolve();
+        throw error;
       }
       await page.waitForSelector(selectors.loader, {hidden: true, timeout: resultsTimeout});
     } catch (e) {
       isFTLRequestSuccess = false
       brokerQuoteDataFTL.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
+      await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteDataFTL);
       console.error(e);
     }
     if (isFTLRequestSuccess) {

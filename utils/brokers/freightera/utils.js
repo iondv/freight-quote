@@ -75,7 +75,7 @@ async function fillFTLForm(quote, page) {
   const temp = quote.loadingDate.toISOString().substring(0,10).split("-");
   const reqDate = `${temp[1]}/${temp[2]}/${temp[0]}`;
   await page.$eval(selectors.requestLoadingDate, (el, loadDate) => el.value = loadDate ? loadDate : el.value, reqDate);
-  await page.click(selectors.flexibleCheckbox);
+  // await page.click(selectors.flexibleCheckbox);
   await page.waitForSelector(selectors.pickupCityOrPostalCode, {visible: true});
   await page.type(selectors.pickupCityOrPostalCode, postcodeToVal(quote.pickup));
   try {

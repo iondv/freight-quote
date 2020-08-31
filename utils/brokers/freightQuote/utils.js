@@ -202,6 +202,5 @@ async function fillQuoteForm(quote, page) {
   await clearAndFill(page, selectors.palletHeight, quote.height);
   await clearAndFill(page, selectors.weight, quote.weight);
   await clearAndFill(page, selectors.quantity, quote.quantity);
-  await page.waitFor(50000);
 }
 module.exports.fillQuoteForm = fillQuoteForm;
