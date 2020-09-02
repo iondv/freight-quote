@@ -29,6 +29,7 @@ module.exports = function (options, ppt, param) {
 
     let isLTLRequestSuccess = true;
     const brokerQuoteDataLTL = {
+      "broker": broker.guid,
       "logs": '',
       "quotes": param.quote.id
     }
@@ -40,8 +41,9 @@ module.exports = function (options, ppt, param) {
 
     } catch (e) {
       brokerQuoteDataLTL.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
-      isLTLRequestSuccess = false
       console.error(e);
+      await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteDataLTL);
+      return resolve();
     }
 
     try {
@@ -57,13 +59,37 @@ module.exports = function (options, ppt, param) {
     }
     try {
       const acceptCookies = await page.$(selectors.acceptCookies);
-      if (acceptCookies) await acceptCookies.click()
+      if (acceptCookies) await acceptCookies.click();
       await page.click(selectors.submitBtn);
-      await page.waitForSelector(selectors.resultQuotes, {timeout: resultsTimeout});
+      await Promise.race([
+        page.waitForSelector(selectors.resultQuotes, {timeout: resultsTimeout, visible: true}),
+        page.waitForSelector(selectors.modalButtons, {timeout: resultsTimeout, visible: true}),
+        page.waitForSelector(selectors.paidFeatureParcel, {timeout: resultsTimeout, visible: true})
+      ]);
+      const parcelPrompt = await page.$(selectors.paidFeatureParcel);
+      let parcelPromptText;
+      if (parcelPrompt)
+        parcelPromptText = await parcelPrompt.$eval(selectors.parcelModalLabel, el => el.innerText);
+      if (parcelPrompt && parcelPromptText.includes('PAID FEATURE')) {
+        const error = new Error('Freightera: Parcel service quotes is a paid feature.');
+        console.error(error);
+        brokerQuoteDataLTL.logs += `${error.code ? error.code + ' ' + error.message : error.message}\n`;
+        await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteDataLTL);
+        return resolve();
+      }
+      const modalWindow = await page.$(selectors.modalLabel);
+      let modalWindowText;
+      if (modalWindow)
+        modalWindowText = await modalWindow.evaluate(el => el.innerText);
+      if (modalWindow && modalWindowText.includes('quote is unavailable')) {
+        const error = new Error('Freightera: Automated quote is not available for these request parameters.');
+        throw error;
+      }
       await page.waitForSelector(selectors.loader, {hidden: true, timeout: resultsTimeout});
     } catch (e) {
       isLTLRequestSuccess = false
       brokerQuoteDataLTL.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
+      await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteDataLTL);
       console.error(e);
     }
     if (isLTLRequestSuccess) {
@@ -78,33 +104,34 @@ module.exports = function (options, ppt, param) {
         brokerQuoteDataLTL.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
         console.error(e)
       }
-    }
-    try {
-      const brokerQuotes = await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteDataLTL);
-      const resultRows = await page.$$(selectors.resultsRow);
-      for (const row of resultRows) {
-        const carrierName = await row.$eval(selectors.carrierName, el => el.innerText);
-        let transitTime = await page.$eval(selectors.transitTime, el => el.innerText);
-        const quoteType = 'LTL';
-        const transitRate = await row.$eval(selectors.transitRate, el => el.innerText);
-        const resultsObj = {
-          "quotes": param.quote.id,
-          "brokerQuotes": brokerQuotes.id,
-          "carrierName": carrierName,
-          "estimated": transitTime,
-          "rate": parseFloat(transitRate.substring(1).split(',').join('')),
-          "quoteType": quoteType
-        };
-        await options.dataRepo.createItem('result@freight-quote', resultsObj);
+      try {
+        const brokerQuotes = await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteDataLTL);
+        const resultRows = await page.$$(selectors.resultsRow);
+        for (const row of resultRows) {
+          const carrierName = await row.$eval(selectors.carrierName, el => el.innerText);
+          let transitTime = await page.$eval(selectors.transitTime, el => el.innerText);
+          const quoteType = 'LTL';
+          const transitRate = await row.$eval(selectors.transitRate, el => el.innerText);
+          const resultsObj = {
+            "quotes": param.quote.id,
+            "brokerQuotes": brokerQuotes.id,
+            "carrierName": carrierName,
+            "estimated": transitTime,
+            "rate": parseFloat(transitRate.substring(1).split(',').join('')),
+            "quoteType": quoteType
+          };
+          await options.dataRepo.createItem('result@freight-quote', resultsObj);
+        }
+      } catch (e) {
+        console.error(e);
+        return reject(e);
       }
-    } catch (e) {
-      console.error(e);
-      return reject(e);
     }
 
     console.log((new Date).toISOString(), 'Checking quotes on', urlFTL);
     let isFTLRequestSuccess = true;
     const brokerQuoteDataFTL = {
+      "broker": broker.guid,
       "logs": '',
       "quotes": param.quote.id
     }
@@ -129,20 +156,45 @@ module.exports = function (options, ppt, param) {
     } catch (e) {
       brokerQuoteDataFTL.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
       console.error(e)
-      return reject(e);
+      // return reject(e);
     }
     try {
       const acceptCookies = await page.$(selectors.acceptCookies);
-      if (acceptCookies) await acceptCookies.click()
+      if (acceptCookies)
+        await acceptCookies.click()
       const sendBtn = await page.$(selectors.submitBtn)
       if (sendBtn) {
         await sendBtn.click()
       }
-      await page.waitForSelector(selectors.resultQuotes, {timeout: resultsTimeout});
+      await Promise.race([
+        page.waitForSelector(selectors.resultQuotes, {timeout: resultsTimeout, visible: true}),
+        page.waitForSelector(selectors.modalButtons, {timeout: resultsTimeout, visible: true}),
+        page.waitForSelector(selectors.paidFeatureParcel, {timeout: resultsTimeout, visible: true})
+      ]);
+      const parcelPrompt = await page.$(selectors.paidFeatureParcel);
+      let parcelPromptText;
+      if (parcelPrompt)
+        parcelPromptText = await parcelPrompt.$eval(selectors.parcelModalLabel, el => el.innerText);
+      if (parcelPrompt && parcelPromptText.includes('PAID FEATURE')) {
+        const error = new Error('Freightera: Parcel service quotes is a paid feature.');
+        console.error(error);
+        brokerQuoteDataFTL.logs += `${error.code ? error.code + ' ' + error.message : error.message}\n`;
+        await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteDataFTL);
+        return resolve();
+      }
+      const modalWindow = await page.$(selectors.modalLabel);
+      let modalWindowText;
+      if (modalWindow)
+        modalWindowText = await modalWindow.evaluate(el => el.innerText);
+      if (modalWindow && modalWindowText.includes('quote is unavailable')) {
+        const error = new Error('Freightera: Automated quote is not available for these request parameters.');
+        throw error;
+      }
       await page.waitForSelector(selectors.loader, {hidden: true, timeout: resultsTimeout});
     } catch (e) {
       isFTLRequestSuccess = false
       brokerQuoteDataFTL.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
+      await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteDataFTL);
       console.error(e);
     }
     if (isFTLRequestSuccess) {
@@ -157,28 +209,28 @@ module.exports = function (options, ppt, param) {
         brokerQuoteDataFTL.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
         console.error(e)
       }
-    }
-    try {
-      const brokerQuotes = await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteDataFTL);
-      const resultRows = await page.$$(selectors.resultsRow);
-      for (const row of resultRows) {
-        const carrierName = await row.$eval(selectors.carrierName, el => el.innerText);
-        let transitTime = await page.$eval(selectors.transitTime, el => el.innerText);
-        const quoteType = 'LTL';
-        const transitRate = await row.$eval(selectors.transitRate, el => el.innerText);
-        const resultsObj = {
-          "quotes": param.quote.id,
-          "brokerQuotes": brokerQuotes.id,
-          "carrierName": carrierName,
-          "estimated": transitTime,
-          "rate": parseFloat(transitRate.substring(1).split(',').join('')),
-          "quoteType": quoteType
-        };
-        await options.dataRepo.createItem('result@freight-quote', resultsObj);
+      try {
+        const brokerQuotes = await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteDataFTL);
+        const resultRows = await page.$$(selectors.resultsRow);
+        for (const row of resultRows) {
+          const carrierName = await row.$eval(selectors.carrierName, el => el.innerText);
+          let transitTime = await page.$eval(selectors.transitTime, el => el.innerText);
+          const quoteType = 'FTL';
+          const transitRate = await row.$eval(selectors.transitRate, el => el.innerText);
+          const resultsObj = {
+            "quotes": param.quote.id,
+            "brokerQuotes": brokerQuotes.id,
+            "carrierName": carrierName,
+            "estimated": transitTime,
+            "rate": parseFloat(transitRate.substring(1).split(',').join('')),
+            "quoteType": quoteType
+          };
+          await options.dataRepo.createItem('result@freight-quote', resultsObj);
+        }
+      } catch (e) {
+        console.error(e);
+        return reject(e);
       }
-    } catch (e) {
-      console.error(e);
-      return reject(e);
     }
     return resolve();
   })

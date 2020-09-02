@@ -28,6 +28,7 @@ module.exports = function (options, ppt, param) { //checkQuote
 
     let isRequestSuccess = true;
     const brokerQuoteData = {
+      "broker": broker.guid,
       "logs": '',
       "quotes": param.quote.id
     }
@@ -46,8 +47,9 @@ module.exports = function (options, ppt, param) { //checkQuote
 
     } catch (e) {
       brokerQuoteData.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
-      isRequestSuccess = false
       console.error(e);
+      await options.dataRepo.createItem('brokerQuotes@freight-quote', brokerQuoteData);
+      return resolve();
     }
 
     try {
@@ -68,14 +70,14 @@ module.exports = function (options, ppt, param) { //checkQuote
       }
       await page.waitForSelector('.emphasis-lg')
       const acceptCookiesPrompt = await page.$(selectors.acceptCookies);
-      if (acceptCookiesPrompt) await page.click(selectors.acceptCookies);
+      if (acceptCookiesPrompt && (await acceptCookiesPrompt.boundingBox())) await page.click(selectors.acceptCookies);
     } catch (e) {
       isRequestSuccess = false
       brokerQuoteData.logs += `${e.code ? e.code + ' ' + e.message : e.message}\n`
       console.error(e);
     }
 
-    if (true || isRequestSuccess) {
+    if (isRequestSuccess) {
       // await utils.parseQuoteForm(page);
       // await page.waitForSelector(selectors.resultQuotes, {visible: true});
       try {
