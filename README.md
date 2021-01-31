@@ -9,6 +9,8 @@ The demo version app makes queries to the real freight sites and shows the actua
 
 ## Demo
 
+Watch a brief video https://www.youtube.com/watch?v=-2IfSOecc_w
+
 Demo access to view the system without registration: https://freight-quote.iondv.ru/
 
 Login: **demo**, password: **ion-demo**.
